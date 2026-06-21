@@ -241,4 +241,4 @@ shape = SubResource("RectangleShape2D_onrkg")
 position = Vector2(1, -4.000001)
 scale = Vector2(2.15625, 2.15625)
 sprite_frames = SubResource("SpriteFrames_dw050")
-animation = &"death"
+animation = &"run"

@@ -8,6 +8,7 @@
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_tlwt5")]
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+zoom = Vector2(2, 2)
 
 [node name="ColorRect" parent="." instance=ExtResource("2_fj7yv")]
 offset_left = -128.0

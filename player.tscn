@@ -239,7 +239,12 @@ shape = SubResource("RectangleShape2D_onrkg")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -4.000001)
 sprite_frames = SubResource("SpriteFrames_dw050")
-animation = &"run"
-autoplay = "idle"
-frame = 7
-frame_progress = 0.26156402
+animation = &"death"
+
+[node name="JumpBufferTimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true

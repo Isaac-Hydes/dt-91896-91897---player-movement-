@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d4ld2qgbnt6v6" path="res://brackeys_platformer_assets/sprites/knight.png" id="2_onrkg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
-size = Vector2(10, 17)
+size = Vector2(10, 14)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_onrkg"]
 atlas = ExtResource("2_onrkg")
@@ -234,17 +234,19 @@ animations = [{
 script = ExtResource("1_onrkg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_onrkg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -4.000001)
 sprite_frames = SubResource("SpriteFrames_dw050")
-animation = &"death"
+animation = &"idle"
+frame_progress = 0.6979456
 
 [node name="JumpBufferTimer" type="Timer" parent="."]
 wait_time = 0.15
 one_shot = true
 
 [node name="CoyoteTimer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.15
 one_shot = true

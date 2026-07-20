@@ -1,22 +1,23 @@
 extends CharacterBody2D
 
-
+#These are the variables for the code that can be changed.
 @export var speed: int = 200
 @export var acceleration: int = 20
 @export var jump_speed: int = -speed 
 @export var gravity: int = speed * 2
-@export var down_gravity: float = 3
+@export var down_gravity: float = 1
 @onready var animations: AnimatedSprite2D = $AnimatedSprite2D
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var coyote_timer: Timer = $CoyoteTimer
 
+# The double jump variables.
 var jump_count = 0
 var max_jumps = 2
 
 enum State{IDLE, WALK, JUMP, DOWN}
 var current_state: State = State.IDLE
 
-
+#The order of the code processes.
 func _physics_process(_delta: float) -> void:
 	handle_input()
 	update_movement(_delta)
@@ -24,9 +25,20 @@ func _physics_process(_delta: float) -> void:
 	update_animation()
 	move_and_slide()
 
+#Jumping, Jump Buffer, Direction of Movement
 func handle_input() -> void:
-	if Input.is_action_just_pressed("ui_accept"):
-		jump_buffer_timer.start()
+	if Input.is_action_just_pressed("ui_accept") and jump_count == 1:
+		velocity.y = jump_speed
+		jump_count = 2
+		
+	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		velocity.y = jump_speed
+		current_state = State.JUMP
+		coyote_timer.stop()
+		jump_count = 1
+		
+	if !Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		jump_count = 0
 
 	var direction = Input.get_axis("ui_left", "ui_right")
 	
@@ -34,24 +46,27 @@ func handle_input() -> void:
 		velocity.x = move_toward(velocity.x, 0, acceleration)
 	else: velocity.x = move_toward(velocity.x, speed * direction, acceleration)
 
-
+#Double Jumping / Jumping
 func update_movement(_delta: float) -> void:
-	if is_on_floor():
-		jump_count = 0
+	
+	
+
 		
-	if (jump_count < max_jumps || coyote_timer.time_left > 0) && jump_buffer_timer.time_left > 0:
+	
+	'''if (is_on_floor() || coyote_timer.time_left > 0) && jump_buffer_timer.time_left > 0:
+	#if (jump_count < max_jumps || coyote_timer.time_left > 0) && jump_buffer_timer.time_left > 0:
 		velocity.y = jump_speed
 		current_state = State.JUMP
 		jump_buffer_timer.stop()
 		coyote_timer.stop()
-		jump_count = jump_count + 1
+		jump_count = jump_count + 1'''
 		
 	if current_state == State.JUMP:
 		velocity.y += gravity * _delta
 	else:
 		velocity.y += gravity * down_gravity * _delta
 
-
+# Updates and Changes the States and Animations
 func update_states() -> void:
 	match current_state:
 		State.IDLE when velocity.x != 0:

@@ -26,23 +26,7 @@ func _physics_process(_delta: float) -> void:
 
 #Jumping, Jump Buffer, Direction of Movement
 func handle_input() -> void:
-	# The Jumping of the player is in this code
-	if Input.is_action_just_pressed("ui_accept") and jump_count == 1:
-		velocity.y = jump_speed
-		current_state = State.JUMP
-		jump_count = 2
-		
-	if Input.is_action_just_pressed("ui_accept") and coyote_timer.time_left > 0:
-		velocity.y = jump_speed
-		current_state = State.JUMP
-		coyote_timer.stop()
-		jump_count = 1
-		
-	if !Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		coyote_timer.start()
-		jump_buffer_timer.start()
-		jump_count = 0
-
+	
 	# The direction of the player
 	var direction = Input.get_axis("ui_left", "ui_right")
 	
@@ -52,7 +36,24 @@ func handle_input() -> void:
 
 # The Down gravity and gravity of the player
 func update_movement(_delta: float) -> void:
+	# The Jumping of the player is in this code
+	if Input.is_action_just_pressed("ui_accept") and jump_count == 1:
+		velocity.y = jump_speed
+		current_state = State.JUMP
+		jump_count = 2
 		
+	if (Input.is_action_just_pressed("ui_accept") || is_on_floor()) and coyote_timer.time_left > 0 and jump_buffer_timer.time_left > 0:
+		velocity.y = jump_speed
+		current_state = State.JUMP
+		jump_buffer_timer.stop()
+		coyote_timer.stop()
+		jump_count = 1
+		
+	if !Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		jump_buffer_timer.start()
+		coyote_timer.start()
+		jump_count = 0
+	
 	if current_state == State.JUMP:
 		velocity.y += gravity * _delta
 	else:

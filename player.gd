@@ -10,6 +10,8 @@ extends CharacterBody2D
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var coyote_timer: Timer = $CoyoteTimer
 
+var score = 0
+
 # The double jump variable.
 var jump_count = 0
 
@@ -26,7 +28,6 @@ func _physics_process(_delta: float) -> void:
 
 #Jumping, Jump Buffer, Direction of Movement
 func handle_input() -> void:
-	
 	# The direction of the player
 	var direction = Input.get_axis("ui_left", "ui_right")
 	
@@ -42,7 +43,7 @@ func update_movement(_delta: float) -> void:
 		current_state = State.JUMP
 		jump_count = 2
 		
-	if (Input.is_action_just_pressed("ui_accept") || is_on_floor()) and coyote_timer.time_left > 0 and jump_buffer_timer.time_left > 0:
+	if (Input.is_action_just_pressed("ui_accept")) and coyote_timer.time_left > 0 and jump_buffer_timer.time_left > 0:
 		velocity.y = jump_speed
 		current_state = State.JUMP
 		jump_buffer_timer.stop()

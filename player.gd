@@ -10,6 +10,7 @@ extends CharacterBody2D
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var coyote_timer: Timer = $CoyoteTimer
 
+#This is the score for the stars collection. It increases as the player collects stars. 
 var score = 0
 
 # The double jump variable.
@@ -26,7 +27,7 @@ func _physics_process(_delta: float) -> void:
 	update_animation()
 	move_and_slide()
 
-#Jumping, Jump Buffer, Direction of Movement
+#Direction of the Player Movement taken from player input. 
 func handle_input() -> void:
 	# The direction of the player
 	var direction = Input.get_axis("ui_left", "ui_right")
@@ -35,14 +36,17 @@ func handle_input() -> void:
 		velocity.x = move_toward(velocity.x, 0, acceleration)
 	else: velocity.x = move_toward(velocity.x, speed * direction, acceleration)
 
-# The Down gravity and gravity of the player
+# The Gravity and Jumping of the Player
 func update_movement(_delta: float) -> void:
-	# The Jumping of the player is in this code
+# All of the Jumping
+	
+	# The second jump
 	if Input.is_action_just_pressed("ui_accept") and jump_count == 1:
 		velocity.y = jump_speed
 		current_state = State.JUMP
 		jump_count = 2
 		
+	# The first jump
 	if (Input.is_action_just_pressed("ui_accept")) and coyote_timer.time_left > 0 and jump_buffer_timer.time_left > 0:
 		velocity.y = jump_speed
 		current_state = State.JUMP
@@ -50,17 +54,23 @@ func update_movement(_delta: float) -> void:
 		coyote_timer.stop()
 		jump_count = 1
 		
+	# When on the ground as part of the jumping code. 
 	if !Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		jump_buffer_timer.start()
 		coyote_timer.start()
 		jump_count = 0
+		
+# The Gravity of the Player
 	
+	# The gravity of the player
 	if current_state == State.JUMP:
 		velocity.y += gravity * _delta
+		
+	# The down gravity of the player
 	else:
 		velocity.y += gravity * down_gravity * _delta
 
-# Updates and Changes the States and Animations
+# Updates and Changes the States of the player from different circumstances. 
 func update_states() -> void:
 	match current_state:
 		State.IDLE when velocity.x != 0:
@@ -71,7 +81,6 @@ func update_states() -> void:
 				current_state = State.IDLE 
 			if not is_on_floor() && velocity.y > 0:
 				current_state = State.DOWN
-				#coyote_timer.start()
 		
 		State.JUMP when velocity.y > 0:
 			current_state = State.DOWN
@@ -83,14 +92,15 @@ func update_states() -> void:
 				current_state = State.WALK
 			
 
+# This flips the player animation from left to right depending on the direction that it is moving.
 func update_animation() -> void:
 	if velocity.x != 0:
 		animations.scale.x = sign(velocity.x)		
 	
+	# This is the code that plays the animations in each state. 
 	match current_state:
 		State.IDLE: animations.play("idle")
 		State.WALK: animations.play("run")
 		State.JUMP: animations.play("death")
 		State.DOWN: animations.play("loselife")
 	
-	animations.play("run")

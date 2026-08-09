@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cktghoebq88f4"]
 
-[ext_resource type="Script" uid="uid://2b6gbnb75gm" path="res://star_code.gd" id="1_opvdl"]
-[ext_resource type="Texture2D" uid="uid://brkm74j3vbmxw" path="res://22-star-png-image.png" id="2_opvdl"]
+[ext_resource type="Script" uid="uid://2b6gbnb75gm" path="res://Scripts/star_code.gd" id="1_opvdl"]
+[ext_resource type="Texture2D" uid="uid://brkm74j3vbmxw" path="res://Images/22-star-png-image.png" id="2_opvdl"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o7hf8"]
 radius = 9.0

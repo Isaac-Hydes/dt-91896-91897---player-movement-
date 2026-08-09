@@ -1,7 +1,8 @@
-[gd_scene load_steps=33 format=3 uid="uid://dnuy37lui6atb"]
+[gd_scene load_steps=34 format=3 uid="uid://dnuy37lui6atb"]
 
-[ext_resource type="Script" uid="uid://njogi1qxfr5l" path="res://player.gd" id="1_onrkg"]
+[ext_resource type="Script" uid="uid://njogi1qxfr5l" path="res://Scripts/player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://d4ld2qgbnt6v6" path="res://brackeys_platformer_assets/sprites/knight.png" id="2_onrkg"]
+[ext_resource type="PackedScene" uid="uid://cprt01lvsaj7c" path="res://Nodes/Stars_UI.tscn" id="3_pie2b"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_onrkg"]
 radius = 5.0
@@ -251,3 +252,5 @@ one_shot = true
 [node name="CoyoteTimer" type="Timer" parent="."]
 wait_time = 0.15
 one_shot = true
+
+[node name="Star_UI" parent="." instance=ExtResource("3_pie2b")]

@@ -13,4 +13,8 @@ config_version=5
 config/name="DT 91896/91897 - Player Movement"
 run/main_scene="uid://cxkt7kma0luc6"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://Images/icon.svg"
+
+[autoload]
+
+StarCode="*res://Scripts/star_code.gd"

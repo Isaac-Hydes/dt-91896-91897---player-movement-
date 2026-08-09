@@ -10,6 +10,8 @@ extends CharacterBody2D
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var coyote_timer: Timer = $CoyoteTimer
 
+const star_code = preload("res://Scripts/star_code.gd")
+
 #This is the score for the stars collection. It increases as the player collects stars. 
 var score = 0
 
@@ -27,6 +29,7 @@ func _physics_process(_delta: float) -> void:
 	update_animation()
 	move_and_slide()
 
+
 #Direction of the Player Movement taken from player input. 
 func handle_input() -> void:
 	# The direction of the player
@@ -35,7 +38,7 @@ func handle_input() -> void:
 	if direction == 0:
 		velocity.x = move_toward(velocity.x, 0, acceleration)
 	else: velocity.x = move_toward(velocity.x, speed * direction, acceleration)
-
+	
 # The Gravity and Jumping of the Player
 func update_movement(_delta: float) -> void:
 # All of the Jumping
@@ -45,7 +48,7 @@ func update_movement(_delta: float) -> void:
 		velocity.y = jump_speed
 		current_state = State.JUMP
 		jump_count = 2
-		
+
 	# The first jump
 	if (Input.is_action_just_pressed("ui_accept")) and coyote_timer.time_left > 0 and jump_buffer_timer.time_left > 0:
 		velocity.y = jump_speed
@@ -54,14 +57,14 @@ func update_movement(_delta: float) -> void:
 		coyote_timer.stop()
 		jump_count = 1
 		
+		
 	# When on the ground as part of the jumping code. 
 	if !Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		jump_buffer_timer.start()
 		coyote_timer.start()
 		jump_count = 0
 		
-# The Gravity of the Player
-	
+# The Gravitys of the Player
 	# The gravity of the player
 	if current_state == State.JUMP:
 		velocity.y += gravity * _delta
@@ -104,3 +107,7 @@ func update_animation() -> void:
 		State.JUMP: animations.play("death")
 		State.DOWN: animations.play("loselife")
 	
+
+
+func _on_Star1_star_collected() -> void:
+	pass # Replace with function body.

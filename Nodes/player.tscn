@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://njogi1qxfr5l" path="res://Scripts/player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://d4ld2qgbnt6v6" path="res://brackeys_platformer_assets/sprites/knight.png" id="2_onrkg"]
-[ext_resource type="PackedScene" uid="uid://cprt01lvsaj7c" path="res://Nodes/Stars_UI.tscn" id="3_pie2b"]
+[ext_resource type="Texture2D" uid="uid://brkm74j3vbmxw" path="res://Images/22-star-png-image.png" id="3_pie2b"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_onrkg"]
 radius = 5.0
@@ -253,4 +253,38 @@ one_shot = true
 wait_time = 0.15
 one_shot = true
 
-[node name="Star_UI" parent="." instance=ExtResource("3_pie2b")]
+[node name="Star--1" type="Sprite2D" parent="."]
+position = Vector2(-235, 132)
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("3_pie2b")
+
+[node name="Star--2" type="Sprite2D" parent="."]
+position = Vector2(-195, 132)
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("3_pie2b")
+
+[node name="Star--3" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-155, 132)
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("3_pie2b")
+
+[node name="Star--4" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-115, 132)
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("3_pie2b")
+
+[node name="Star--5" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-75, 132)
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("3_pie2b")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+offset_left = -260.0
+offset_top = 113.0
+offset_right = -51.0
+offset_bottom = 153.0
+color = Color(1.353256, 1.353256, 1.353256, 0.21568628)

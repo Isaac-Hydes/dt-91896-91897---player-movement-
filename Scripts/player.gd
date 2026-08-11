@@ -10,6 +10,14 @@ extends CharacterBody2D
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var coyote_timer: Timer = $CoyoteTimer
 
+@onready var star_1: Sprite2D = $"Star--1"
+@onready var star_2: Sprite2D = $"Star--2"
+@onready var star_3: Sprite2D = $"Star--3"
+@onready var star_4: Sprite2D = $"Star--4"
+@onready var star_5: Sprite2D = $"Star--5"
+
+
+
 const star_code = preload("res://Scripts/star_code.gd")
 
 #This is the score for the stars collection. It increases as the player collects stars. 
@@ -27,6 +35,7 @@ func _physics_process(_delta: float) -> void:
 	update_movement(_delta)
 	update_states()
 	update_animation()
+	stars_collection()
 	move_and_slide()
 
 
@@ -38,6 +47,7 @@ func handle_input() -> void:
 	if direction == 0:
 		velocity.x = move_toward(velocity.x, 0, acceleration)
 	else: velocity.x = move_toward(velocity.x, speed * direction, acceleration)
+	
 	
 # The Gravity and Jumping of the Player
 func update_movement(_delta: float) -> void:
@@ -107,7 +117,14 @@ func update_animation() -> void:
 		State.JUMP: animations.play("death")
 		State.DOWN: animations.play("loselife")
 	
-
-
-func _on_Star1_star_collected() -> void:
-	pass # Replace with function body.
+func stars_collection() -> void:
+	if score == 1:
+		star_1.show()
+	if score == 2:
+		star_2.show()
+	if score == 3:
+		star_3.show()
+	if score == 4:
+		star_4.show()
+	if score == 5:
+		star_5.show()

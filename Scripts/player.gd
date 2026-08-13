@@ -9,19 +9,30 @@ extends CharacterBody2D
 @onready var animations: AnimatedSprite2D = $AnimatedSprite2D
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var coyote_timer: Timer = $CoyoteTimer
+@onready var fall_damage_timer: Timer = $MaximumAirTime
 
 @onready var star_1: Sprite2D = $"Star--1"
 @onready var star_2: Sprite2D = $"Star--2"
 @onready var star_3: Sprite2D = $"Star--3"
 @onready var star_4: Sprite2D = $"Star--4"
 @onready var star_5: Sprite2D = $"Star--5"
+@onready var life_3: Sprite2D = $"Life-3"
+@onready var life_2: Sprite2D = $"Life-2"
+@onready var life_1: Sprite2D = $"Life-1"
+
+const fall_damage_height: float = 20.0
+var was_in_air: bool = false
+var fall_start_y: float = 0.0
 
 
-
+# This is the script for the stars for the stars collected variables. 
 const star_code = preload("res://Scripts/star_code.gd")
 
-#This is the score for the stars collection. It increases as the player collects stars. 
+# This is the score for the stars collection. It increases as the player collects stars. 
 var score = 0
+
+# This is the amount of lives the player has. It will decrease if the player loses a life.
+var lives: int = 3
 
 # The double jump variable.
 var jump_count = 0
@@ -29,17 +40,18 @@ var jump_count = 0
 enum State{IDLE, WALK, JUMP, DOWN}
 var current_state: State = State.IDLE
 
-#The order of the code processes.
+# The order of the code processes.
 func _physics_process(_delta: float) -> void:
 	handle_input()
 	update_movement(_delta)
 	update_states()
 	update_animation()
 	stars_collection()
+	lose_lives()
 	move_and_slide()
 
 
-#Direction of the Player Movement taken from player input. 
+# Direction of the Player Movement taken from player input. 
 func handle_input() -> void:
 	# The direction of the player
 	var direction = Input.get_axis("ui_left", "ui_right")
@@ -128,3 +140,23 @@ func stars_collection() -> void:
 		star_4.show()
 	if score == 5:
 		star_5.show()
+
+
+func lose_lives() -> void:
+	if was_in_air:
+		var fall_distance: float = abs(fall_start_y - global_position.y)
+		if fall_distance >= fall_damage_height:
+			lives = lives - 1
+		was_in_air = false
+	if !was_in_air:
+		fall_start_y = global_position.y
+		was_in_air = true
+
+func lives_ui() -> void:
+	if lives == 2:
+		life_3.hide()
+	if lives == 1:
+		life_2.hide()
+	if lives == 0:
+		life_1.hide()
+		get_tree().reload_current_scene()

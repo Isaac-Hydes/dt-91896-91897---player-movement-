@@ -1,8 +1,9 @@
-[gd_scene load_steps=34 format=3 uid="uid://dnuy37lui6atb"]
+[gd_scene load_steps=35 format=3 uid="uid://dnuy37lui6atb"]
 
 [ext_resource type="Script" uid="uid://njogi1qxfr5l" path="res://Scripts/player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://d4ld2qgbnt6v6" path="res://brackeys_platformer_assets/sprites/knight.png" id="2_onrkg"]
 [ext_resource type="Texture2D" uid="uid://brkm74j3vbmxw" path="res://Images/22-star-png-image.png" id="3_pie2b"]
+[ext_resource type="Texture2D" uid="uid://cyv57cxccpmvc" path="res://Images/Lives_UI.png" id="4_sfp35"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_onrkg"]
 radius = 5.0
@@ -254,11 +255,13 @@ wait_time = 0.15
 one_shot = true
 
 [node name="Star--1" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(-235, 132)
 scale = Vector2(0.02, 0.02)
 texture = ExtResource("3_pie2b")
 
 [node name="Star--2" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(-195, 132)
 scale = Vector2(0.02, 0.02)
 texture = ExtResource("3_pie2b")
@@ -288,3 +291,24 @@ offset_top = 113.0
 offset_right = -51.0
 offset_bottom = 153.0
 color = Color(1.353256, 1.353256, 1.353256, 0.21568628)
+
+[node name="Life-1" type="Sprite2D" parent="."]
+position = Vector2(84, -87.000015)
+scale = Vector2(1.452, 1.452)
+texture = ExtResource("4_sfp35")
+region_enabled = true
+region_rect = Rect2(-0.09440231, -0.20663452, 16.121712, 16.12171)
+
+[node name="Life-2" type="Sprite2D" parent="."]
+position = Vector2(46.999996, -95)
+scale = Vector2(1.452, 1.452)
+texture = ExtResource("4_sfp35")
+region_enabled = true
+region_rect = Rect2(-0.09440231, -0.20663452, 16.121712, 16.12171)
+
+[node name="Life-3" type="Sprite2D" parent="."]
+position = Vector2(117, -90)
+scale = Vector2(1.452, 1.452)
+texture = ExtResource("4_sfp35")
+region_enabled = true
+region_rect = Rect2(-0.09440231, -0.20663452, 16.121712, 16.12171)
